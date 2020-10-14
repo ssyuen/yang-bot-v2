@@ -9,8 +9,8 @@ module.exports = {
     },
     ping: function(message) {
         let ping = Date.now() - message.createdTimestamp + ' ms';
-        return "Your ping is `" + `${ping}`;
+        return "Your ping is " + `${ping}`;
 
     },
-    
+
 }
