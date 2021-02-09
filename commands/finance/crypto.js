@@ -1,37 +1,52 @@
-const message = require("../message/message");
-
-const prefix = process.env.PREFIX;
+const fetch = require("node-fetch");
 const AV_KEY = process.env.AV_KEY
+const PREFIX = process.env.PREFIX
 
-let cryptoCurr = ""
-let realCurr = ""
-const AV_URL = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${cryptoCurr}&to_currency=${realCurr}&apikey=${AV_KEY}`
 
 module.exports = {
-    checkValid: function (message) {
-        let fmtMsg = message.content.split(" ")[0];
-        switch (fmtMsg) {
-            case `${prefix}crypto`:
-                return true;
+    'crypto': {
+        name: 'crypto',
+        description: 'Returns value of a cryptocurrency in any real world currency.',
+        usage: '<CRYPTOCURRENCY> <REALWORLDCURRENCY>',
+        execute(message, args) {
+            let cryptoCurr = args[0].toUpperCase();
+            let realCurr = 'USD'
+            if (args.length === 2) {
+                realCurr = args[1].toUpperCase();
+            }
+            
+
+            fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${cryptoCurr}&to_currency=${realCurr}&apikey=${AV_KEY}`)
+                .then(data => data.json())
+                .then(data => {
+
+                    let askPrice = data['Realtime Currency Exchange Rate']['9. Ask Price']
+                    let exchangeRate = data['Realtime Currency Exchange Rate']['5. Exchange Rate']
+                    let realCurrName = data['Realtime Currency Exchange Rate']['4. To_Currency Name']
+                    message.channel.send(`1 ${cryptoCurr} is exchanging for **${exchangeRate}** ${realCurrName}.`)
+                }).catch(error => {
+                    message.channel.send(`Improper usage: ${PREFIX}${this.name} ${this.usage}`);
+                })
         }
     },
-    crypto: message => {
-        let fmtMsg = message.content.split(" ");
-        cryptoCurr = fmtMsg[1].toUpperCase();
-        realCurr = fmtMsg[2].toUpperCase();
-        message.channel.send(cryptoCurr)
-        message.channel.send(realCurr)
-        
-        let response = fetch(AV_URL)
-            .then(data => data.json())
-            .then(data => {
-                
-                let askPrice = data['Realtime Currency Exchange Rate']['9. Ask Price']
-                let exchangeRate = data['Realtime Currency Exchange Rate']['5. Exchange Rate']
-                let realCurrName = data['Realtime Currency Exchange Rate']['4. To_Currency Name']
-                return `1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`
-            })
-        return response;
-    }
+    'rating':{
+        name: 'rating',
+        description: 'Returns value of a cryptocurrency in any real world currency.',
+        usage: '<CRYPTOCURRENCY> <REALWORLDCURRENCY>',
+        execute(message, args) {
+            cryptoCurr = args[0].toUpperCase();
+            realCurr = args[1].toUpperCase();
+
+            fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${cryptoCurr}&to_currency=${realCurr}&apikey=${AV_KEY}`)
+                .then(data => data.json())
+                .then(data => {
+
+                    let askPrice = data['Realtime Currency Exchange Rate']['9. Ask Price']
+                    let exchangeRate = data['Realtime Currency Exchange Rate']['5. Exchange Rate']
+                    let realCurrName = data['Realtime Currency Exchange Rate']['4. To_Currency Name']
+                    message.channel.send(`1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`)
+                })
+        }
+    },
 
 }

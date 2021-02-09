@@ -16,6 +16,10 @@ module.exports = {
     wiki: function(message) {
         let response =  fetch('https://en.wikipedia.org/wiki/' + message.content);
         
+    },
+
+    help: (command, message) => {
+        
     }
 
 }
