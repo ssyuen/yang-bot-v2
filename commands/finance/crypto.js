@@ -19,16 +19,17 @@ module.exports = {
         let fmtMsg = message.content.split(" ");
         cryptoCurr = fmtMsg[1].toUpperCase();
         realCurr = fmtMsg[2].toUpperCase();
-        let response = fetch(AV_URL, {
-            method: 'GET'
-        }).then(data => data.json()).then(data => {
-            let response = data
-            let askPrice = response['9. Ask Price']
-            let exchangeRate = response['5. Exchange Rate']
-            let realCurrName = response['4. To_Currency Name']
-            return `1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`
-        })
-        return response;
+        return cryptoCurr + ' ' + realCurr
+        // let response = fetch(AV_URL, {
+        //     method: 'GET'
+        // }).then(data => data.json()).then(data => {
+        //     let response = data
+        //     let askPrice = response['9. Ask Price']
+        //     let exchangeRate = response['5. Exchange Rate']
+        //     let realCurrName = response['4. To_Currency Name']
+        //     return `1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`
+        // })
+        // return response;
     }
 
 }
