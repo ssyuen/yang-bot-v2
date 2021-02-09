@@ -1,10 +1,13 @@
+const { Message, User } = require("discord.js");
+const { client } = require('../../index')
 const prefix = process.env.PREFIX;
+
 
 module.exports = {
 
     converse: message => {
         let fmtMsg = message.content.toLowerCase();
-
+        
         if (fmtMsg.search('brother') !== -1) {
             return 'Sounds like something Sam would say...';
         }
@@ -13,6 +16,9 @@ module.exports = {
         }
         else if (fmtMsg.search('thanks') !== -1) {
             return `❤. Anytime ${message.author}.`;
+        }
+        else if (message.mentions.has(client.user)) {
+            return 'You mentioned?'
         }
     },
     updatePinLog: message => {
