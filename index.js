@@ -11,6 +11,8 @@ const utilCmds = require('./commands/util/util');
 const messageCmds = require('./commands/message/message');
 const memberCmds = require('./commands/member/member');
 const funCmds = require('./commands/fun/fun');
+const cryptoCmds = require('./commands/finance/crypto');
+const stockCmds = require('./commands/finance/stock');
 
 // let cmds = 
 
@@ -25,6 +27,13 @@ client.on('message', message => {
             switch (command.substring(1)) {
                 case 'ping':
                     message.channel.send(utilCmds.ping(message));
+                    break;
+            }
+        }
+        else if (cryptoCmds.checkValid(command)) {
+            switch (command.substring(1)) {
+                case 'crypto':
+                    message.channel.send(cryptoCmds.crypto(message));
                     break;
             }
         }
