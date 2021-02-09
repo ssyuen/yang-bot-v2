@@ -8,9 +8,9 @@ let realCurr = ""
 const AV_URL = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${cryptoCurr}&to_currency=${realCurr}&apikey=${AV_KEY}`
 
 module.exports = {
-    checkValid: function(message) {
+    checkValid: function (message) {
         let fmtMsg = message.content.split(" ")[0];
-        switch(fmtMsg) {
+        switch (fmtMsg) {
             case `${prefix}crypto`:
                 return true;
         }
@@ -19,17 +19,17 @@ module.exports = {
         let fmtMsg = message.content.split(" ");
         cryptoCurr = fmtMsg[1].toUpperCase();
         realCurr = fmtMsg[2].toUpperCase();
-        return cryptoCurr + ' ' + realCurr
-        // let response = fetch(AV_URL, {
-        //     method: 'GET'
-        // }).then(data => data.json()).then(data => {
-        //     let response = data
-        //     let askPrice = response['9. Ask Price']
-        //     let exchangeRate = response['5. Exchange Rate']
-        //     let realCurrName = response['4. To_Currency Name']
-        //     return `1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`
-        // })
-        // return response;
+
+        let response = fetch(AV_URL)
+            .then(data => data.json())
+            .then(data => {
+                let response = data
+                let askPrice = response['9. Ask Price']
+                let exchangeRate = response['5. Exchange Rate']
+                let realCurrName = response['4. To_Currency Name']
+                return `1 ${cryptoCurr} is exchanging for ${exchangeRate} ${realCurrName}.`
+            })
+        return response;
     }
 
 }
