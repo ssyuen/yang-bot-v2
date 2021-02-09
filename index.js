@@ -23,6 +23,7 @@ client.once('ready', () => {
 client.on('message', message => {
     if (message.author !== client.user && message.content.substring(0, 1) === `${prefix}`) {
         let command = message.content;
+        message.channel.send(command)
         if (utilCmds.checkValid(command)) {
             switch (command.substring(1)) {
                 case 'ping':
