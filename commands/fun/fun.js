@@ -1,6 +1,8 @@
 const prefix = process.env.PREFIX;
 
-export function slogan(message) {
-
-    return;
+module.exports = {
+    slogan: function(message) {
+        
+        return
+    }
 }

@@ -39,9 +39,22 @@ client.on('message', message => {
 
     }
 
+})
 
+client.on('guildMemberAdd', member => {
+    memberCmds.join(member);
+})
 
+client.on('guildMemberRemove', member => {
+    memberCmds.leave(member);
+})
 
+client.on('channelPinsUpdate', message => {
+    messageCmds.updatePinLog(message);
+})
+
+client.on('messageDelete', message => {
+    // TODO
 })
 
 client.login(process.env['TOKEN']);
