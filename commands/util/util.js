@@ -14,7 +14,7 @@ module.exports = {
     },
 
     wiki: function(message) {
-        let response = await fetch('https://en.wikipedia.org/wiki/' + message.content);
+        let response =  fetch('https://en.wikipedia.org/wiki/' + message.content);
         
     }
 
