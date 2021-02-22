@@ -16,10 +16,10 @@ module.exports = {
             else if (fmtMsg.search('happy birthday') !== -1) {
                 message.channel.send(`Happy Birthday! 🎈🎉 to ${message.author} from ${process.env.NAME}`);
             }
-            else if (fmtMsg.search('thanks') !== -1) {
+            else if (fmtMsg.includes('thanks') && fmtMsg.includes('yang')) {
                 message.channel.send(`❤. Anytime ${message.author}.`);
             }
-            else if (message.mentions.has(client.user)) {
+            else if (message.isMemberMentioned(client.user)) {
                 message.channel.send('You mentioned?');
             }
         }
